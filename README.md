@@ -33,7 +33,7 @@ cargo build --release --features large_lut
 ## Usage
 
 ```
-xbrz-cli <INPUT> <OUTPUT> [-f FACTOR] [-F FORMAT] [-v]
+xbrz-cli <INPUT> [-o OUTPUT] [-f FACTOR] [-F FORMAT] [-v]
 ```
 
 ### Arguments
@@ -41,35 +41,35 @@ xbrz-cli <INPUT> <OUTPUT> [-f FACTOR] [-F FORMAT] [-v]
 | Argument | Description |
 |---|---|
 | `INPUT` | Path to the input image |
-| `OUTPUT` | Path to the output image |
+| `-o`, `--output` | Output path (default: `<input>_hq<N>.<ext>`) |
 | `-f`, `--factor` | Scale factor, 2-6 (default: 2) |
 | `-F`, `--format` | Output format override (png, jpeg, bmp, webp, tiff, tga, gif, qoi) |
 | `-v`, `--verbose` | Print dimensions and timing info to stderr |
 
 ### Examples
 
-Scale a sprite 4x:
+Scale a sprite 2x (outputs `sprite_hq2.png`):
 
 ```sh
-xbrz-cli sprite.png sprite_4x.png -f 4
+xbrz-cli sprite.png
+```
+
+Scale 4x with explicit output:
+
+```sh
+xbrz-cli sprite.png -o sprite_4x.png -f 4
 ```
 
 Convert format while scaling:
 
 ```sh
-xbrz-cli input.bmp output.webp -f 3
-```
-
-Override output format explicitly:
-
-```sh
-xbrz-cli input.png output.dat -F png -f 2
+xbrz-cli input.bmp -o output.webp -f 3
 ```
 
 Verbose output:
 
 ```sh
-xbrz-cli tile.png tile_big.png -f 6 -v
+xbrz-cli tile.png -f 6 -v
 # Input:  16x16
 # Output: 96x96 (factor 6)
 # Done in 0.01s

@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use clap::Parser;
@@ -14,8 +14,9 @@ struct Args {
     /// Input image path
     input: PathBuf,
 
-    /// Output image path
-    output: PathBuf,
+    /// Output image path [default: <input>_hq<N>.<ext>]
+    #[arg(short, long)]
+    output: Option<PathBuf>,
 
     /// Scale factor (2-6)
     #[arg(short = 'f', long, default_value_t = 2, value_parser = clap::value_parser!(u8).range(2..=6))]
@@ -44,16 +45,25 @@ fn parse_format(name: &str) -> Option<ImageFormat> {
     }
 }
 
-fn determine_format(args: &Args) -> ImageFormat {
-    if let Some(ref fmt) = args.output_format {
+fn default_output_path(input: &Path, factor: u8) -> PathBuf {
+    let stem = input
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or("output");
+    let ext = input.extension().and_then(|e| e.to_str()).unwrap_or("png");
+    let name = format!("{stem}_hq{factor}.{ext}");
+    input.with_file_name(name)
+}
+
+fn determine_format(output: &Path, format_override: &Option<String>) -> ImageFormat {
+    if let Some(ref fmt) = format_override {
         return parse_format(fmt).unwrap_or_else(|| {
             eprintln!("Error: unknown output format '{fmt}'");
             std::process::exit(1);
         });
     }
 
-    let ext = args
-        .output
+    let ext = output
         .extension()
         .and_then(|e| e.to_str())
         .unwrap_or_else(|| {
@@ -71,7 +81,10 @@ fn determine_format(args: &Args) -> ImageFormat {
 
 fn main() {
     let args = Args::parse();
-    let format = determine_format(&args);
+    let output = args
+        .output
+        .unwrap_or_else(|| default_output_path(&args.input, args.factor));
+    let format = determine_format(&output, &args.output_format);
 
     let start = Instant::now();
 
@@ -116,7 +129,7 @@ fn main() {
     };
 
     image::save_buffer_with_format(
-        &args.output,
+        &output,
         &buf,
         out_w as u32,
         out_h as u32,
@@ -124,7 +137,7 @@ fn main() {
         format,
     )
     .unwrap_or_else(|e| {
-        eprintln!("Error: failed to write '{}': {e}", args.output.display());
+        eprintln!("Error: failed to write '{}': {e}", output.display());
         std::process::exit(1);
     });
 

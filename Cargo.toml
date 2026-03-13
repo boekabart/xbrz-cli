@@ -1,0 +1,15 @@
+[package]
+name = "xbrz-cli"
+version = "0.1.0"
+edition = "2021"
+description = "CLI tool for xBRZ pixel-art upscaling"
+license = "GPL-3.0-only"
+repository = "https://github.com/boekabart/xbrz-cli"
+
+[dependencies]
+xbrz = { package = "xbrz-rs", version = "0.1" }
+image = "0.25"
+clap = { version = "4", features = ["derive"] }
+
+[features]
+large_lut = ["xbrz/large_lut"]

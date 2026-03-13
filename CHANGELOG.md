@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0] - 2026-03-13
+
+### Added
+- JPEG XL (`.jxl`) lossless output support via zune-jpegxl.
+
+### Changed
+- `--format` override now affects the default output filename (e.g. `-F jxl` produces `<input>_hq<N>.jxl`).
+
 ## [0.2.0] - 2026-03-13
 
 ### Changed

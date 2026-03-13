@@ -1,6 +1,6 @@
 [package]
 name = "xbrz-cli"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 description = "CLI tool for xBRZ pixel-art upscaling"
 license = "GPL-3.0-only"
@@ -20,6 +20,8 @@ include = [
 xbrz = { package = "xbrz-rs", version = "0.1" }
 image = "0.25"
 clap = { version = "4", features = ["derive"] }
+zune-jpegxl = "0.5"
+zune-core = "0.5"
 
 [features]
 large_lut = ["xbrz/large_lut"]

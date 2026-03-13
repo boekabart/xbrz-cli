@@ -43,7 +43,7 @@ xbrz-cli <INPUT> [-o OUTPUT] [-f FACTOR] [-F FORMAT] [-v]
 | `INPUT` | Path to the input image |
 | `-o`, `--output` | Output path (default: `<input>_hq<N>.<ext>`) |
 | `-f`, `--factor` | Scale factor, 2-6 (default: 2) |
-| `-F`, `--format` | Output format override (png, jpeg, bmp, webp, tiff, tga, gif, qoi) |
+| `-F`, `--format` | Output format override (png, jpeg, bmp, webp, tiff, tga, gif, qoi, jxl) |
 | `-v`, `--verbose` | Print dimensions and timing info to stderr |
 
 ### Examples
@@ -77,9 +77,11 @@ xbrz-cli tile.png -f 6 -v
 
 ## Supported Formats
 
-PNG, JPEG, BMP, WebP, TIFF, TGA, GIF, QOI
+PNG, JPEG, BMP, WebP, TIFF, TGA, GIF, QOI, JPEG XL
 
 > **Note:** JPEG does not support alpha transparency. When outputting to JPEG, any alpha channel will be lost.
+
+> **Note:** JPEG XL output is lossless only, encoded via [zune-jpegxl](https://crates.io/crates/zune-jpegxl).
 
 ## Architecture
 

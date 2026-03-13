@@ -5,6 +5,12 @@ A command-line tool for upscaling pixel art using the [xBRZ algorithm](https://e
 ## Installation
 
 ```sh
+cargo install xbrz-cli
+```
+
+Or directly from the repository:
+
+```sh
 cargo install --git https://github.com/boekabart/xbrz-cli
 ```
 

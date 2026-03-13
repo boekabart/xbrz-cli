@@ -5,6 +5,16 @@ edition = "2021"
 description = "CLI tool for xBRZ pixel-art upscaling"
 license = "GPL-3.0-only"
 repository = "https://github.com/boekabart/xbrz-cli"
+homepage = "https://github.com/boekabart/xbrz-cli"
+readme = "README.md"
+keywords = ["pixel-art", "upscaling", "xbrz", "image", "cli"]
+categories = ["command-line-utilities", "multimedia::images"]
+include = [
+    "/Cargo.toml",
+    "/README.md",
+    "/LICENSE",
+    "/src/**",
+]
 
 [dependencies]
 xbrz = { package = "xbrz-rs", version = "0.1" }
